@@ -2,12 +2,12 @@
 # Copyright (c) 2018 - 2019 AXeL
 
 from lib import data, tools, parser
-from .game import GameThread
+from .fighting import FightingThread
 
-class TravelThread(GameThread):
+class TravelThread(FightingThread):
 
 	def __init__(self, parent, game_location):
-		GameThread.__init__(self, parent, game_location)
+		FightingThread.__init__(self, parent, game_location)
 
 	def move(self, direction):
 		# get coordinates

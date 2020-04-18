@@ -40,6 +40,7 @@ class JobThread(FarmingThread):
 				screen = tools.screen_game(self.game_location)
 				# click on resource
 				self.debug("Collecting resource {'x': %d, 'y': %d, 'color': %s}" % (resource['x'], resource['y'], resource['color']))
+				print('\007')
 				self.click(resource)
 				if self.game_version == GameVersion.Retro:
 					# re-click to validate
@@ -58,9 +59,10 @@ class JobThread(FarmingThread):
 				self.debug('Checking for screen change')
 				if self.monitor_game_screen(tolerance=2.5, screen=screen, timeout=1, wait_after_timeout=False):
 					# check for fight
-					if self.game_version != GameVersion.Retro and self.wait_for_box_appear(box_name='Fight Button', timeout=1):
-						self.pause()
+					if self.game_version != GameVersion.Retro and self.wait_for_box_appear(box_name='Fight Button Light', timeout=1):
+						# self.pause()
 						self.log('Fight detected! human help wanted..', LogType.Error)
+						self.handle_fight()
 					elif self.auto_close_popups:
 						# it should be a popup (level up, ...)
 						self.debug('Closing popup')
