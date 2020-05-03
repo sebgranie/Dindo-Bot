@@ -534,6 +534,12 @@ class BotWindow(Gtk.ApplicationWindow):
 		self.click_twice_switch = Gtk.Switch()
 		hbox.pack_end(self.click_twice_switch, False, False, 0)
 		widget.add(hbox)
+		# Color sentitive
+		hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+		hbox.add(Gtk.Label('<b>Color Sensitive</b>', xalign=0, use_markup=True))
+		self.click_color_sensitive = Gtk.Switch()
+		hbox.pack_end(self.click_color_sensitive, False, False, 0)
+		widget.add(hbox)
 		# Location
 		hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
 		hbox.add(Gtk.Label('<b>Location</b>', xalign=0, use_markup=True))
@@ -929,7 +935,10 @@ class BotWindow(Gtk.ApplicationWindow):
 	def add_click(self, location):
 		x, y, width, height, color = location
 		twice = self.click_twice_switch.get_active()
-		self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s)' % (x, y, width, height, twice))
+		color_sensitive = self.click_color_sensitive.get_active()
+		if not color_sensitive:
+			color=None
+		self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s,color=%s)' % (x, y, width, height, twice, color))
 		self.select_button.set_sensitive(True)
 		self.set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
 
