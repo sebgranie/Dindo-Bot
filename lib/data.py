@@ -54,7 +54,7 @@ class DragodindeSerenity:
 	Negative, Medium, Positive = ('Negative', 'Medium', 'Positive')
 	MaxMedium = 57.55
 
-# DragodindeEnergy
+# Drago5dindeEnergy
 class DragodindeEnergy:
 	Max = 98.55
 
@@ -97,7 +97,8 @@ KeyboardShortcuts = {
 	'Tab':       'tab',
 	'Esc':       'esc',
 	'arakne':	 '-',
-	'epee':      '('
+	'epee':      '(',
+	'EndTurn':   ','
 	#'Copy':      'ctrl+c',
 	#'Cut':       'ctrl+x',
 	#'Paste':     'ctrl+v',
