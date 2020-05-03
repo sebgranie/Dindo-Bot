@@ -91,7 +91,7 @@ class GameThread(PausableThread):
 			self.debug('Waiting for screen to load (%d sec)' % load_time)
 			self.sleep(load_time)
 
-	def wait_for_box_appear(self, box_name, box_color=None, timeout=30):
+	def wait_for_box_appear(self, box_name, box_color=None, timeout=30, sleep=1):
 		# set box color
 		if box_color is None:
 			if box_name in data.Colors:
@@ -102,7 +102,7 @@ class GameThread(PausableThread):
 		elapsed_time = 0
 		while elapsed_time < timeout:
 			# wait 1 second
-			self.sleep(1)
+			self.sleep(sleep)
 			# check for pause or suspend
 			self.pause_event.wait()
 			if self.suspend: return False

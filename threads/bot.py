@@ -74,6 +74,10 @@ class BotThread(JobThread):
 			self.pause_event.wait()
 			if self.suspend: break
 
+			if self.wait_for_box_appear(box_name='Fight Button Light', timeout=1):
+				self.log('Fight detected! human help wanted..', LogType.Error)
+				self.handle_fight()
+
 			# parse instruction
 			self.debug('Instruction (%d): %s' % (i, line), DebugLevel.Low)
 			instruction = parser.parse_instruction(line)

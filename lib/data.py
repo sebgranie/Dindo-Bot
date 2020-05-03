@@ -23,6 +23,7 @@ Locations = {
 	'Exit Defeat Message':   {'x': 556, 'y': 503, 'width': 900, 'height': 712},
 	'Login Input':           {'x': 270, 'y': 146, 'width': 566, 'height': 456},
 	'Password Input':        {'x': 270, 'y': 174, 'width': 566, 'height': 456},
+	'Fight Button':          {'x': 720, 'y': 661, 'width': 900, 'height': 712},
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }
 
@@ -41,10 +42,10 @@ Boxes = {
 	'Play Button':           {'x': 341, 'y': 362, 'width': 96, 'height': 1, 'windowSize': (566, 456)},
 	'Login Button':          {'x': 400, 'y': 385, 'width': 96, 'height': 1, 'windowSize': (900, 700)}, # not accurate
 	'PodBar':                {'x': 658, 'y': 564, 'width': 81, 'height': 1, 'windowSize': (900, 700)},
-	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
-	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
+	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 5, 'height': 5, 'windowSize': (900, 712)},
+	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 5, 'height': 5, 'windowSize': (900, 712)},
 	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)},
-	'Whole Screen':          {'x': 0, 'y': 0, 'width' 900, 'height': 712, 'windowSize': (900, 712)}}
+	'Whole Screen':          {'x': 0, 'y': 0, 'width': 900, 'height': 712, 'windowSize': (900, 712)}
 	# TODO: update all boxes coordinates to (900, 700) window size
 }
 
@@ -73,11 +74,10 @@ Colors = {
 	'Play Button':        (215, 247, 0),
 	'Login Button':       (214, 246, 0),
 	'Empty PodBar':       (67, 70, 68),
-	'Fight Button Light':       (206, 240, 0),
-	'Fight Button Dark': (123,143,0),
+	'Fight Button Light': (206, 240, 0),
+	'Fight Button Dark':  (123,143,0),
 	'Job Level Up Popup': (229, 249, 0),
-	'Defeat': (161,75,67),
-	
+	'Defeat':             (161,75,67)
 }
 
 # Keyboard shortcuts
@@ -96,7 +96,8 @@ KeyboardShortcuts = {
 	'Enter':     'enter',
 	'Tab':       'tab',
 	'Esc':       'esc',
-	'arakne':	 '_'
+	'arakne':	 '-',
+	'epee':      '('
 	#'Copy':      'ctrl+c',
 	#'Cut':       'ctrl+x',
 	#'Paste':     'ctrl+v',
@@ -120,7 +121,7 @@ Enclos = {
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }
 
-# Zaap
+# Zaapdata
 Zaap = {
 	'From': {
 		'Havenbag':  {'x': 110, 'y': 162, 'width': 566, 'height': 456, 'keyboardShortcut': KeyboardShortcuts['Havenbag']},
@@ -130,9 +131,9 @@ Zaap = {
 	'To': {
 		'Bonta':     {'x': 285, 'y': 330, 'width': 900, 'height': 712},
 		'Rocky Roads':   {'x': 280, 'y': 424, 'width': 900, 'height': 712, 'scroll': -1},
-		'Astrub (Tailena)':   {'x': 390, 'y': 267, 'width': 900, 'height': 712},
-		'Amakna (Madresdam Harbour)':   {'x': 449, 'y': 269, 'width': 900, 'height': 712},
-		'Cania Plains (Lousy Big Plains)':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
+		'Astrub Tailena':   {'x': 390, 'y': 267, 'width': 900, 'height': 712},
+		'Amakna Madresdam Harbour':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
+		'Cania Plains Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
 	}
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }

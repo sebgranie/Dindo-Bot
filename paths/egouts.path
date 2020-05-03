@@ -1,4 +1,4 @@
-Zaap(from=Havenbag,to=Amakna (Madresdam Harbour))
+Zaap(from=Havenbag,to=Amakna Madresdam Harbour)
 Collect(map=[7,-4],store_path=None)
 Click(x=147,y=76,width=900,height=712,twice=False)
 MonitorGameScreen()
