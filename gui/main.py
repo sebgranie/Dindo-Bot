@@ -540,6 +540,22 @@ class BotWindow(Gtk.ApplicationWindow):
 		self.click_color_sensitive = Gtk.Switch()
 		hbox.pack_end(self.click_color_sensitive, False, False, 0)
 		widget.add(hbox)
+		# Hot Key
+		# hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+		# self.hot_key_radio = Gtk.RadioButton()
+		# self.hot_key_radio.add(Gtk.Label('<b>Hot Key</b>', xalign=0, use_markup=True))
+		# hbox.add(self.hot_key_radio)
+		# self.hot_key_label = Gtk.Label()
+		# hbox.add(self.hot_key_label)
+		# widget.add(hbox)
+		self.hot_keys_combo = CustomComboBox(data.KeyboardShortcuts, sort=True)
+		self.hot_keys_combo.set_margin_left(10)
+		# self.keys_combo.connect('changed', lambda combo: (
+		# 		self.hot_key_label.set_text('(' + data.KeyboardShortcuts[combo.get_active_text()] + ')'),
+		# 		self.hot_key_radio.set_active(True)
+		# 	)
+		# )
+		widget.add(self.hot_keys_combo)
 		# Location
 		hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
 		hbox.add(Gtk.Label('<b>Location</b>', xalign=0, use_markup=True))
@@ -936,9 +952,11 @@ class BotWindow(Gtk.ApplicationWindow):
 		x, y, width, height, color = location
 		twice = self.click_twice_switch.get_active()
 		color_sensitive = self.click_color_sensitive.get_active()
+		hot_key = self.hot_keys_combo.get_active_text()
 		if not color_sensitive:
-			color=None
-		self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s,r=%d, g=%d, b=%d)' % (x, y, width, height, twice, color[0], color[1], color[2]))
+			self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s,hotkey=%s)' % (x, y, width, height, twice, hot_key))
+		else:
+			self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s,hotkey=%s,r=%d, g=%d, b=%d)' % (x, y, width, height, twice, hot_key, color[0], color[1], color[2]))
 		self.select_button.set_sensitive(True)
 		self.set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
 

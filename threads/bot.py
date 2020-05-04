@@ -39,7 +39,8 @@ class BotThread(JobThread):
 					self.pause_event.wait()
 					if self.suspend: break
 					# start interpretation
-					self.interpret(instructions)
+					if self.interpret(instructions):
+						self.interpret("GoToBank()")
 					repeat_count += 1
 
 				# tell user that we have complete the path
@@ -103,7 +104,8 @@ class BotThread(JobThread):
 				self.use_zaapi(instruction['from'], instruction['to'])
 
 			elif instruction['name'] == 'Collect':
-				self.collect(instruction['map'], instruction['store_path'])
+				if self.collect(instruction['map'], instruction['store_path']):
+					return 1
 
 			elif instruction['name'] == 'Click':
 				coordinates = {
@@ -119,11 +121,16 @@ class BotThread(JobThread):
 						self.pause_event.wait()
 						if self.suspend: return
 						self.sleep(5.0)
-						
-				if instruction['twice'] == 'True':
+				
+				if 'hotkey' in instruction:
+					self.hot_click(instruction['hotkey'], coordinates, instruction['twice'])
+				elif instruction['twice'] == 'True':
 					self.double_click(coordinates)
 				else:
 					self.click(coordinates)
+
+			elif instruction['name'] == 'GoToBank':
+				self.go_to_bank()
 
 			elif instruction['name'] == 'Scroll':
 				times = int(instruction['times'])
@@ -158,3 +165,14 @@ class BotThread(JobThread):
 
 			else:
 				self.debug('Unknown instruction', DebugLevel.Low)
+
+	def go_to_bank(self):
+		path_to_bank = data.BankPath
+		self.debug(f"Go to Bank (path: {path_to_bank})")
+		instructions = tools.read_file(tools.get_full_path(path_to_bank))
+		if instructions:
+			self.interpret(instructions, ignore_start_from_step=True)
+		else:
+			self.pause()
+			self.debug('Could not interpret to go to bank path')
+			self.log('Bot is maybe full pod', LogType.Error)

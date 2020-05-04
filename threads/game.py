@@ -150,6 +150,11 @@ class GameThread(PausableThread):
 		self.debug('Press key: ' + key, DebugLevel.High)
 		tools.press_key(key)
 
+	def hot_click(self, key, coord, double=False):
+		tools.key_down(key)
+		self.click(coord, double)
+		tools.key_up(key)
+
 	def type_text(self, text):
 		# type text
 		self.debug('Type text: ' + text, DebugLevel.High)

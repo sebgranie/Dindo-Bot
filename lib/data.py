@@ -41,7 +41,7 @@ Boxes = {
 	'Inventory First Place': {'x': 377, 'y': 165, 'width': 168, 'height': 1, 'windowSize': (566, 456)},
 	'Play Button':           {'x': 341, 'y': 362, 'width': 96, 'height': 1, 'windowSize': (566, 456)},
 	'Login Button':          {'x': 400, 'y': 385, 'width': 96, 'height': 1, 'windowSize': (900, 700)}, # not accurate
-	'PodBar':                {'x': 658, 'y': 564, 'width': 81, 'height': 1, 'windowSize': (900, 700)},
+	'PodBar':                {'x': 364, 'y': 692, 'width': 322, 'height': 1, 'windowSize': (900, 704)},
 	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
 	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
 	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)},
@@ -73,7 +73,7 @@ Colors = {
 	'Empty Inventory':    (53, 53, 45),
 	'Play Button':        (215, 247, 0),
 	'Login Button':       (214, 246, 0),
-	'Empty PodBar':       (67, 70, 68),
+	'Empty PodBar':       (0, 0, 0),
 	'Fight Button Light': (206, 240, 0),
 	'Fight Button Dark':  (123,143,0),
 	'Job Level Up Popup': (229, 249, 0),
@@ -82,6 +82,7 @@ Colors = {
 
 # Keyboard shortcuts
 KeyboardShortcuts = {
+	'None':      '',
 	'Havenbag':  'h',
 	'Inventory': 'i',
 	'Store':     '&',
@@ -96,6 +97,7 @@ KeyboardShortcuts = {
 	'Enter':     'enter',
 	'Tab':       'tab',
 	'Esc':       'esc',
+	'Ctrl':      'crtl',
 	'arakne':	 '-',
 	'epee':      '(',
 	'EndTurn':   ','
@@ -160,18 +162,18 @@ Zaapi = {
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }
 
-# BankPath
-BankPath = {
-	# Bonta
-	'Bank Bonta': [
-		'Zaap(from=Havenbag,to=Bonta)',
-		'Zaapi(from=Zaap Bonta,to=Bank)',
-		# TODO: complete this path...
-	],
-	# Brakmar
-	'Bank Brakmar': [
-		'Zaap(from=Havenbag,to=Brakmar)',
-		'Zaapi(from=Zaap Brakmar,to=Bank)',
-		# TODO: complete this path...
-	]
-}
+BankPath = "./paths/path-to-bank.path"
+# BankPath = {
+# 	# Bonta
+# 	'Bank Bonta': [
+# 		'Zaap(from=Havenbag,to=Bonta)',
+# 		'Zaapi(from=Zaap Bonta,to=Bank)',
+# 		# TODO: complete this path...
+# 	],
+# 	# Brakmar
+# 	'Bank Brakmar': [
+# 		'Zaap(from=Havenbag,to=Brakmar)',
+# 		'Zaapi(from=Zaap Brakmar,to=Bank)',
+# 		# TODO: complete this path...
+# 	]
+# }

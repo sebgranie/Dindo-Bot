@@ -237,6 +237,12 @@ def press_key(key, interval=None):
 	elif count == 2:
 		pyautogui.hotkey(keys[0], keys[1])
 
+def key_down(key):
+	pyautogui.keyDown(key)
+
+def key_up(key):
+	pyautogui.keyUp(key)
+
 # Type text
 def type_text(text, interval=0.1):
 	for c in text:

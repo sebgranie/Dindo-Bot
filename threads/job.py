@@ -14,6 +14,7 @@ class JobThread(FarmingThread):
 	def __init__(self, parent, game_location):
 		FarmingThread.__init__(self, parent, game_location)
 		self.podbar_enabled = parent.settings['State']['EnablePodBar']
+		self.go_to_bank_pod_percentage = parent.settings['State']['GoToBankPodPercentage']
 		self.minimap_enabled = parent.settings['State']['EnableMiniMap']
 		self.check_resources_color = parent.settings['Farming']['CheckResourcesColor']
 		self.auto_close_popups = parent.settings['Farming']['AutoClosePopups']
@@ -78,13 +79,15 @@ class JobThread(FarmingThread):
 					self.pause_event.wait()
 					if self.suspend: return
 				# get pod
-				if self.game_version != GameVersion.Retro and self.get_pod() >= 99:
+				if self.game_version != GameVersion.Retro and \
+				   self.get_pod() >= self.go_to_bank_pod_percentage:
 					# pod is full, go to store
-					if store_path != 'None':
-						self.go_to_store(store_path)
-					else:
-						self.pause()
-						self.log('Bot is full pod', LogType.Error)
+					# if store_path != 'None':
+					# 	self.go_to_store(store_path)
+					# else:
+					# 	self.pause()
+					self.log('Bot is full pod', LogType.Error)
+					return 1
 
 	def check_location_color(self, location):
 		game_x, game_y, game_width, game_height = self.game_location
@@ -99,58 +102,29 @@ class JobThread(FarmingThread):
 		# check pixel color
 		if self.check_resources_color:
 			if self.check_location_color(resource):
-				self.debug("Ignoring non-matching resource {'x': %d, 'y': %d, 'color': %s} on pixel {'x': %d, 'y': %d, 'color': %s}" % (resource['x'], resource['y'], resource['color'], x, y, color))
+				self.debug("Ignoring non-matching resource {'x': %d, 'y': %d, 'color': %s}" % (resource['x'], resource['y'], resource['color']))
 				# remove current resource from minimap (index = 0)
 				self.remove_from_minimap(0)
 				return False
 		return True
 
-	def go_to_store(self, store_path):
-		self.debug('Go to store (path: %s)' % store_path)
-		if store_path in data.BankPath:
-			instructions = data.BankPath[store_path]
-		else:
-			instructions = tools.read_file(tools.get_full_path(store_path))
-		if instructions:
-			self.interpret(instructions, ignore_start_from_step=True)
-		else:
-			self.pause()
-			self.debug('Could not interpret store path')
-			self.log('Bot is maybe full pod', LogType.Error)
-
 	def get_pod(self):
-		# open inventory
-		self.debug('Opening inventory')
-		screen = tools.screen_game(self.game_location)
-		self.press_key(data.KeyboardShortcuts['Inventory'])
-		# wait for inventory to open
-		self.monitor_game_screen(tolerance=2.5, screen=screen)
-		# check for pause or suspend
 		self.pause_event.wait()
 		if self.suspend: return
 		# get podbar color & percentage
 		location = self.get_box_location('PodBar')
 		screen = tools.screen_game(location)
 		color, percentage = tools.get_dominant_color(screen)
-		# close inventory
-		self.debug('Closing inventory')
-		screen = tools.screen_game(self.game_location)
-		self.press_key(data.KeyboardShortcuts['Inventory'])
-		# wait for inventory to close
-		self.monitor_game_screen(tolerance=2.5, screen=screen)
-		# check for pause or suspend
-		self.pause_event.wait()
-		if self.suspend: return
-		# check if podbar is empty
 		if tools.color_matches(color, data.Colors['Empty PodBar'], tolerance=10):
-			percentage = 0
+			percentage = 100.0 - percentage
 		# update pod bar
+		self.log(f"Pod {percentage}%, color: {color}")
 		self.set_pod(percentage)
 		return percentage
 
 	def set_pod(self, percentage):
 		if self.podbar_enabled:
-			self.debug('Update PodBar (percentage: {}%)'.format(percentage))
+			self.debug(f"Update PodBar (percentage: {percentage}%)")
 			# set podbar value
 			GObject.idle_add(self.parent.podbar.set_fraction, percentage / 100.0)
 
