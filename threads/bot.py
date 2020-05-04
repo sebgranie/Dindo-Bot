@@ -111,13 +111,13 @@ class BotThread(JobThread):
 					'y': int(instruction['y']),
 					'width': int(instruction['width']),
 					'height': int(instruction['height']),
-					'color': instruction['color']
 				}
-				print(instruction['color'])
-				if instruction['color']:
-					print("some color")
-					while not self.check_resource_color(coordinates):
+				if 'r' in instruction:	
+					coordinates['color'] = f"({instruction['r']}, {instruction['g']}, {instruction['b']})"
+					while not self.check_location_color(coordinates):
 						self.log("Click location has a different color, waiting ...")
+						self.pause_event.wait()
+						if self.suspend: return
 						self.sleep(5.0)
 						
 				if instruction['twice'] == 'True':

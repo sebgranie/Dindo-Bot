@@ -938,7 +938,7 @@ class BotWindow(Gtk.ApplicationWindow):
 		color_sensitive = self.click_color_sensitive.get_active()
 		if not color_sensitive:
 			color=None
-		self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s,color=%s)' % (x, y, width, height, twice, color))
+		self.path_listbox.append_text('Click(x=%d,y=%d,width=%d,height=%d,twice=%s,r=%d, g=%d, b=%d)' % (x, y, width, height, twice, color[0], color[1], color[2]))
 		self.select_button.set_sensitive(True)
 		self.set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
 

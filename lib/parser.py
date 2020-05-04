@@ -112,6 +112,8 @@ def parse_key(key):
 # Parse color string, e.: '(255, 255, 255)'
 def parse_color(color, as_hex=False):
 	# check if RGB
+	if isinstance(color, tuple):
+		return color
 	if color.startswith('(') and color.endswith(')'):
 		values = color[1:-1].split(',') # [1:-1] will remove the first & last parentheses '(' ')'
 		if len(values) == 3:

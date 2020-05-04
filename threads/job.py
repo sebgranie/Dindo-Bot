@@ -86,19 +86,23 @@ class JobThread(FarmingThread):
 						self.pause()
 						self.log('Bot is full pod', LogType.Error)
 
+	def check_location_color(self, location):
+		game_x, game_y, game_width, game_height = self.game_location
+		x, y = tools.adjust_click_position(location['x'], location['y'], location['width'], location['height'], game_x, game_y, game_width, game_height)
+		color = tools.get_pixel_color(x, y)
+		location['color'] = parser.parse_color(location['color'])
+		if location['color'] is not None and not tools.color_matches(color, location['color'], tolerance=10):
+			return False
+		return True
+
 	def check_resource_color(self, resource):
 		# check pixel color
 		if self.check_resources_color:
-			game_x, game_y, game_width, game_height = self.game_location
-			x, y = tools.adjust_click_position(resource['x'], resource['y'], resource['width'], resource['height'], game_x, game_y, game_width, game_height)
-			color = tools.get_pixel_color(x, y)
-			resource['color'] = parser.parse_color(resource['color'])
-			if resource['color'] is not None and not tools.color_matches(color, resource['color'], tolerance=10):
+			if self.check_location_color(resource):
 				self.debug("Ignoring non-matching resource {'x': %d, 'y': %d, 'color': %s} on pixel {'x': %d, 'y': %d, 'color': %s}" % (resource['x'], resource['y'], resource['color'], x, y, color))
 				# remove current resource from minimap (index = 0)
 				self.remove_from_minimap(0)
 				return False
-
 		return True
 
 	def go_to_store(self, store_path):

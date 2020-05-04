@@ -40,7 +40,7 @@ def load_defaults():
 			'CheckResourcesColor': True,
 			'AutoClosePopups': True,
 			'CollectionTime': 4,
-			'FirstResourceAdditionalCollectionTime': 5
+			'FirstResourceAdditionalCollectionTime': 3
 		},
 		'EnableShortcuts': False
 	}

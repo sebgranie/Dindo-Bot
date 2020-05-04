@@ -4,7 +4,7 @@
 
 # Movements
 Movements = {
-	'UP':    {'x': 266, 'y': 4, 'width': 566, 'height': 456},
+	'UP':    {'x': 266, 'y': 1, 'width': 566, 'height': 456},
 	'LEFT':  {'x': 5, 'y': 224, 'width': 566, 'height': 456},
 	'RIGHT': {'x': 561, 'y': 225, 'width': 566, 'height': 456},
 	'DOWN':  {'x': 263, 'y': 397, 'width': 566, 'height': 456},
@@ -42,8 +42,8 @@ Boxes = {
 	'Play Button':           {'x': 341, 'y': 362, 'width': 96, 'height': 1, 'windowSize': (566, 456)},
 	'Login Button':          {'x': 400, 'y': 385, 'width': 96, 'height': 1, 'windowSize': (900, 700)}, # not accurate
 	'PodBar':                {'x': 658, 'y': 564, 'width': 81, 'height': 1, 'windowSize': (900, 700)},
-	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 5, 'height': 5, 'windowSize': (900, 712)},
-	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 5, 'height': 5, 'windowSize': (900, 712)},
+	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
+	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
 	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)},
 	'Whole Screen':          {'x': 0, 'y': 0, 'width': 900, 'height': 712, 'windowSize': (900, 712)}
 	# TODO: update all boxes coordinates to (900, 700) window size
@@ -135,6 +135,7 @@ Zaap = {
 		'Astrub Tailena':   {'x': 390, 'y': 267, 'width': 900, 'height': 712},
 		'Amakna Madresdam Harbour':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
 		'Cania Plains Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
+		'Frigost Island': {'x': 452, 'y': 317, 'width': 900, 'height': 704, 'scroll': -10},
 	}
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }

@@ -11,6 +11,8 @@ from lib.shared import LogType, DebugLevel
 from lib import data, tools, imgcompare, accounts
 from .game import GameThread
 
+index = 0
+
 class FightingThread(GameThread):
 
     def __init__(self, parent, game_location):
@@ -25,17 +27,19 @@ class FightingThread(GameThread):
         self.sleep(3.0)
         # The fight has now started
         self.log("The fight has now started")
-        index = 0
+        
         # Detection of whose turn it is
         while self.wait_for_box_appear(box_name='Fight Button Light', timeout=0.1, sleep=0.1) or \
               self.wait_for_box_appear(box_name='Fight Button Dark', timeout=0.1, sleep=0.1):
             self.log("Still in fight", LogType.Info)
             if self.wait_for_box_appear(box_name='Fight Button Light', timeout=0.5, sleep=0.1):
                 self.log("Playing ...", LogType.Info)
-                screen_initial = np.asarray(tools.screen_game(self.game_location, "screenshot-before"))
+                # Wait a couple seconds before playing
+                self.sleep(5.0)
+                screen_initial = np.asarray(tools.screen_game(self.game_location, "screenshots/screenshot-before"))
                 self.press_key(data.KeyboardShortcuts['arakne'])
                 self.sleep(2.0)
-                screen_spell = np.asarray(tools.screen_game(self.game_location, "screenshot-after"))
+                screen_spell = np.asarray(tools.screen_game(self.game_location, "screenshots/screenshot-after"))
                 difference_screen = screen_initial - screen_spell
                 from PIL import Image
                 im = Image.fromarray(difference_screen)
@@ -90,16 +94,18 @@ class FightingThread(GameThread):
                     cv2.circle(image, (cX,cY), 1, (255,0,0))
 
                     im = Image.fromarray(image)
-                    im.save(f"processed-{index}.jpeg")
+                    im.save(f"screenshots/processed-{index}.jpeg")
                     index += 1
-
-                blue_box = {}
-                blue_box['x'] = cX
-                blue_box['y'] = cY
-                blue_box['width'] = 900
-                blue_box['height'] = 712
-                self.click(blue_box)
-                self.log(f"Invoked Spider on {blue_box['x']}, {blue_box['y']}")
+                if not len(cnts):
+                    self.log("No contours found.")
+                else:
+                    blue_box = {}
+                    blue_box['x'] = cX
+                    blue_box['y'] = cY
+                    blue_box['width'] = 900
+                    blue_box['height'] = 704
+                    self.click(blue_box)
+                    self.log(f"Invoked Spider on {blue_box['x']}, {blue_box['y']}")
 
                 self.sleep(2.0)
                 self.log("End Turn .. ", LogType.Info)
@@ -109,5 +115,3 @@ class FightingThread(GameThread):
                 self.log("Waiting for our turn to play", LogType.Info)
             self.log("End while")
         self.log("Game Finished", LogType.Info)
-
-5
