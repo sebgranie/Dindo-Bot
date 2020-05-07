@@ -70,6 +70,7 @@ class TravelThread(FightingThread):
 		self.click(data.Zaap['ZaapItself'])
 		self.sleep(3.0)
 		self.click(data.Zaap['SearchBar'])
+		self.sleep(1.0)
 		for letter in zaap_to:
 			if letter == " ":
 				letter = "space"

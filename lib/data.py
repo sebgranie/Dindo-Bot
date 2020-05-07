@@ -23,7 +23,6 @@ Locations = {
 	'Exit Defeat Message':   {'x': 556, 'y': 503, 'width': 900, 'height': 712},
 	'Login Input':           {'x': 270, 'y': 146, 'width': 566, 'height': 456},
 	'Password Input':        {'x': 270, 'y': 174, 'width': 566, 'height': 456},
-	'Fight Button':          {'x': 720, 'y': 661, 'width': 900, 'height': 712},
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }
 
@@ -44,6 +43,8 @@ Boxes = {
 	'PodBar':                {'x': 364, 'y': 692, 'width': 322, 'height': 1, 'windowSize': (900, 704)},
 	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
 	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
+	'Victory':				 {'x': 492, 'y': 479, 'width': 3, 'height': 3, 'windowSize': (900, 704)},
+	'Defeat':				 {'x': 496, 'y': 499, 'width': 3, 'height': 3, 'windowSize': (900, 712)}, 				 
 	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)},
 	'Whole Screen':          {'x': 0, 'y': 0, 'width': 900, 'height': 712, 'windowSize': (900, 712)}
 	# TODO: update all boxes coordinates to (900, 700) window size
@@ -77,6 +78,7 @@ Colors = {
 	'Fight Button Light': (206, 240, 0),
 	'Fight Button Dark':  (123,143,0),
 	'Job Level Up Popup': (229, 249, 0),
+	'Victory':			  (206,150,20),
 	'Defeat':             (161,75,67)
 }
 
