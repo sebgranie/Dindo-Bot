@@ -1,6 +1,7 @@
 # Dindo Bot
 # Copyright (c) 2018 - 2019 AXeL
 
+import os
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GdkPixbuf, GObject
@@ -21,7 +22,7 @@ class BotWindow(Gtk.ApplicationWindow):
 		# Initialise class attributes
 		self.game_window = None
 		self.game_window_location = None
-		self.bot_path = None
+		self.bot_paths = []
 		self.bot_thread = None
 		self.args = tools.get_cmd_args()
 		# Get settings
@@ -264,7 +265,7 @@ class BotWindow(Gtk.ApplicationWindow):
 		game_window_box.add(self.unbind_button)
 		## Bot Path
 		self.bot_config_widgets.add(Gtk.Label('<b>Bot Path</b>', xalign=0, use_markup=True))
-		bot_path_filechooserbutton = FileChooserButton(title='Choose bot path', filter=('Bot Path', '*.path'))
+		bot_path_filechooserbutton = FileChooserButton(title='Choose bot path', filter=('Bot Path', '*.path*'))
 		bot_path_filechooserbutton.set_margin_left(10)
 		bot_path_filechooserbutton.set_current_folder(tools.get_full_path('paths'))
 		bot_path_filechooserbutton.connect('file-set', self.on_bot_path_changed)
@@ -974,7 +975,7 @@ class BotWindow(Gtk.ApplicationWindow):
 			AlertDialog(self, 'Please select a game window')
 		elif self.game_window.is_destroyed():
 			AlertDialog(self, 'Chosen game window was destroyed')
-		elif not self.bot_path:
+		elif not self.bot_paths:
 			AlertDialog(self, 'Please select a bot path')
 		else:
 			# ensure that game window is in the right place
@@ -1043,7 +1044,15 @@ class BotWindow(Gtk.ApplicationWindow):
 			self.reset_buttons()
 
 	def on_bot_path_changed(self, filechooserbutton):
-		self.bot_path = filechooserbutton.get_filename()
+		path_filename = filechooserbutton.get_filename()
+		print(path_filename)
+		_, ext = os.path.splitext(path_filename)
+		if ext == ".paths":
+			with open(path_filename, "r") as f:
+				for path in f:
+					self.bot_paths.append(tools.get_full_path("paths/"+path.splitlines()[0]))
+		else:
+			self.bot_paths = [path_filename]
 
 	def populate_game_window_combo(self):
 		self.game_window_combo_ignore_change = True

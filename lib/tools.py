@@ -154,6 +154,7 @@ def read_file(filename):
 		file.close()
 		return content
 	else:
+		print(filename)
 		return None
 
 # Return platform name
@@ -204,11 +205,9 @@ def fit_position_to_destination(x, y, window_width, window_height, dest_width, d
 def adjust_click_position(click_x, click_y, window_width, window_height, dest_x, dest_y, dest_width, dest_height):
 	# get screen size
 	screen_width, screen_height = pyautogui.size()
-	print(f"screen_width, screen_height: {screen_width}, {screen_height}")
 	if screen_width > window_width and screen_height > window_height:
 		# fit position to destination size
 		new_x, new_y = fit_position_to_destination(click_x, click_y, window_width, window_height, dest_width, dest_height)
-		print('new_x: %d, new_y: %d, dest_x: %d, dest_y: %d' % (new_x, new_y, dest_x, dest_y))
 		# scale to screen
 		x = new_x + dest_x
 		y = new_y + dest_y

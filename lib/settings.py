@@ -33,7 +33,7 @@ def load_defaults():
 		},
 		'State': {
 			'EnablePodBar':  True,
-			'GoToBankPodPercentage': 95,
+			'GoToBankPodPercentage': 5,
 			'EnableMiniMap': True
 		},
 		'Farming': {

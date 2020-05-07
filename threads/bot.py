@@ -2,7 +2,7 @@
 # Copyright (c) 2018 - 2019 AXeL
 
 from lib.shared import LogType, DebugLevel
-from lib import tools, parser
+from lib import tools, parser, data
 from .job import JobThread
 
 class BotThread(JobThread):
@@ -29,23 +29,25 @@ class BotThread(JobThread):
 			self.pause_event.wait()
 
 		# get instructions & interpret them
-		if not self.suspend:
-			self.debug('Bot path: %s, repeat: %d' % (self.parent.bot_path, self.repeat_path))
-			if self.parent.bot_path:
-				instructions = tools.read_file(self.parent.bot_path)
-				repeat_count = 0
-				while repeat_count < self.repeat_path:
-					# check for pause or suspend
-					self.pause_event.wait()
-					if self.suspend: break
-					# start interpretation
-					if self.interpret(instructions):
-						self.interpret("GoToBank()")
-					repeat_count += 1
+		while True:
+			if not self.suspend:
+				for bot_path in self.parent.bot_paths:
+					self.debug('Bot path: %s, repeat: %d' % (bot_path, self.repeat_path))
+					if bot_path:
+						instructions = tools.read_file(bot_path)
+						repeat_count = 0
+						while repeat_count < self.repeat_path:
+							# check for pause or suspend
+							self.pause_event.wait()
+							if self.suspend: break
+							# start interpretation
+							if self.interpret(instructions):
+								self.interpret("GoToBank()")
+							repeat_count += 1
 
-				# tell user that we have complete the path
-				if not self.suspend:
-					self.log('Bot path completed', LogType.Success)
+						# tell user that we have complete the path
+						if not self.suspend:
+							self.log('Bot path completed', LogType.Success)
 
 		if not self.suspend:
 			# disconnect account
