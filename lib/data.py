@@ -126,21 +126,19 @@ Enclos = {
 
 # Zaapdata
 Zaap = {
-	'From': {
-		'Havenbag':  {'x': 110, 'y': 162, 'width': 566, 'height': 456, 'keyboardShortcut': KeyboardShortcuts['Havenbag']},
-		'Bonta':     {'x': 248, 'y': 140, 'width': 566, 'height': 456},
-		'Brakmar':   {'x': 305, 'y': 106, 'width': 566, 'height': 456},
-	},
+	
 	'To': {
 		'Bonta':          {'x': 285, 'y': 330, 'width': 900, 'height': 712},
 		'Rocky Roads':    {'x': 280, 'y': 424, 'width': 900, 'height': 712, 'scroll': -1},
-		'Astrub Tailena': {'x': 390, 'y': 267, 'width': 900, 'height': 712},
+		'Tailena': {'x': 390, 'y': 267, 'width': 900, 'height': 712},
 		'Astrub City':    {'x': 338, 'y': 228, 'width': 900, 'height': 704},
-		'Amakna Madresdam Harbour':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
-		'Cania Plains Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
+		'Madrestam':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
+		'Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
 		'Frigost Island': {'x': 452, 'y': 317, 'width': 900, 'height': 704, 'scroll': -10},
 	},
-	'SearchBar': {'x': 497, 'y': 136, 'width': 900, 'height': 704}
+	'SearchBar': {'x': 497, 'y': 136, 'width': 900, 'height': 704},
+	'FirstDestination': {'x': 470, 'y': 194, 'width': 900, 'height': 704},
+	'ZaapItself': {'x': 180, 'y': 241, 'width': 900, 'height': 704}
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }
 

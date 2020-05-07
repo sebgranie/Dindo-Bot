@@ -434,7 +434,7 @@ class BotWindow(Gtk.ApplicationWindow):
 		stack_listbox.append(label, widget)
 		# From
 		widget.add(Gtk.Label('<b>From</b>', xalign=0, use_markup=True))
-		self.zaap_from_combo = CustomComboBox(data.Zaap['From'], sort=True)
+		self.zaap_from_combo = CustomComboBox('Havenbag', sort=True)
 		self.zaap_from_combo.set_margin_left(10)
 		self.zaap_from_combo.connect('changed', lambda combo: 
 			combo.sync_with_combo(self.zaap_to_combo)
