@@ -29,12 +29,14 @@ class JobThread(FarmingThread):
 			self.update_minimap(map_data, 'Resource', MiniMap.point_colors['Resource'])
 			# collect resources
 			is_first_resource = True
+			loupe = 0
 			for resource in map_data:
 				# check for pause or suspend
 				self.pause_event.wait()
 				if self.suspend: return
 				# check resource color
 				if not self.check_resource_color(resource):
+					loupe += 1 
 					# go to next resource
 					continue
 				# screen game
@@ -88,6 +90,9 @@ class JobThread(FarmingThread):
 					# 	self.pause()
 					self.log('Bot is full pod', LogType.Error)
 					return 1
+			ratio = (len(map_data)-loupe)/len(map_data)
+			tools.save_text_to_file(f"{map_name}: {ratio}\n", "Ratio/RatioCollectMap.txt", 'a+')
+
 
 	def check_location_color(self, location):
 		game_x, game_y, game_width, game_height = self.game_location
