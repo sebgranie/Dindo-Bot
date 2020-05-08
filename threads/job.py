@@ -101,7 +101,7 @@ class JobThread(FarmingThread):
 	def check_resource_color(self, resource):
 		# check pixel color
 		if self.check_resources_color:
-			if self.check_location_color(resource):
+			if not self.check_location_color(resource):
 				self.debug("Ignoring non-matching resource {'x': %d, 'y': %d, 'color': %s}" % (resource['x'], resource['y'], resource['color']))
 				# remove current resource from minimap (index = 0)
 				self.remove_from_minimap(0)

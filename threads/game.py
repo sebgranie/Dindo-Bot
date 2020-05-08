@@ -91,6 +91,21 @@ class GameThread(PausableThread):
 			self.debug('Waiting for screen to load (%d sec)' % load_time)
 			self.sleep(load_time)
 
+	def has_box_appeared(self, box_name, box_color=None):
+		# set box color
+		if box_color is None:
+			if box_name in data.Colors:
+				box_color = data.Colors[box_name]
+			else:
+				return False
+		location = self.get_box_location(box_name)
+		screen = tools.screen_game(location)
+		percentage = tools.get_color_percentage(screen, box_color)
+		has_appeared = percentage >= 70
+		debug_level = DebugLevel.Normal if has_appeared else DebugLevel.High
+		self.debug(f"{box_name} has appeared: {has_appeared}, percentage: {percentage}", debug_level)
+		return has_appeared
+
 	def wait_for_box_appear(self, box_name, box_color=None, timeout=30, sleep=1):
 		# set box color
 		if box_color is None:

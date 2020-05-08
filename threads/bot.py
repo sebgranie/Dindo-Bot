@@ -133,6 +133,8 @@ class BotThread(JobThread):
 
 			elif instruction['name'] == 'GoToBank':
 				self.go_to_bank()
+				# Return to skip the end of the ongoing path
+				return
 
 			elif instruction['name'] == 'Scroll':
 				times = int(instruction['times'])

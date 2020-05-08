@@ -262,7 +262,7 @@ def create_directory(directory):
 	if not os.path.exists(directory):
 		os.makedirs(directory)
 
-# Check if color matches expected color
+# Check if RGB color matches expected RGB color
 def color_matches(color, expected_color, tolerance=0):
 	r, g, b = color
 	red, green, blue = expected_color

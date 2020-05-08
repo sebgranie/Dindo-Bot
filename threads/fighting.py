@@ -21,6 +21,11 @@ class FightingThread(GameThread):
     def my_turn_to_play(self):
         return True
 
+    def fight_still_on(self):
+        if self.has_box_appeared('Victory') or self.has_box_appeared('Defeat'):
+            return False 
+        return True
+
     def handle_fight(self):
         print('\a')
         print('\007')
@@ -110,7 +115,7 @@ class FightingThread(GameThread):
                     self.index += 1
                 if not len(cnts):
                     self.debug("No contours found.")
-                else:
+                elif self.fight_still_on():
                     blue_box = {}
                     blue_box['x'] = cX
                     blue_box['y'] = cY
@@ -128,4 +133,7 @@ class FightingThread(GameThread):
             # check for pause or suspend
             self.pause_event.wait()
             if self.suspend: return
+            still_in_fight = self.fight_still_on()
         self.log("Game Finished", LogType.Info)
+        self.press_key('esc')
+        self.sleep(3.0)
