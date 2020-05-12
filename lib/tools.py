@@ -225,6 +225,9 @@ def perform_click(x, y, double=False):
 		pyautogui.click(x=x, y=y)
 	pyautogui.moveTo(old_position)
 
+def move_mouse(x, y):
+	pyautogui.moveTo((x,y))
+
 # Press key
 def press_key(key, interval=None):
 	if interval is not None:

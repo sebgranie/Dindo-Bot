@@ -97,9 +97,14 @@ class JobThread(FarmingThread):
 	def check_location_color(self, location):
 		game_x, game_y, game_width, game_height = self.game_location
 		x, y = tools.adjust_click_position(location['x'], location['y'], location['width'], location['height'], game_x, game_y, game_width, game_height)
+		tools.move_mouse(game_x, game_y)
+		self.sleep(0.05)
+		color_1 = tools.get_pixel_color(x, y)
+		tools.move_mouse(x+5,y+5)
+		self.sleep(0.05)
 		color = tools.get_pixel_color(x, y)
 		location['color'] = parser.parse_color(location['color'])
-		if location['color'] is not None and not tools.color_matches(color, location['color'], tolerance=10):
+		if location['color'] is not None and not tools.color_matches(color, location['color'], tolerance=10) and not tools.color_matches(color_1, location['color'], tolerance=10):
 			return False
 		return True
 
