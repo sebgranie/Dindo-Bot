@@ -122,7 +122,7 @@ class BotThread(JobThread):
 						self.log("Click location has a different color, waiting ...")
 						self.pause_event.wait()
 						if self.suspend: return
-						self.sleep(5.0)
+						self.sleep(0.01)
 				
 				if 'hotkey' in instruction:
 					self.hot_click(instruction['hotkey'], coordinates, instruction['twice'])

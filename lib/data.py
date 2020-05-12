@@ -128,16 +128,23 @@ Enclos = {
 
 # Zaapdata
 Zaap = {
-	
-	'To': {
-		'Bonta':          {'x': 285, 'y': 330, 'width': 900, 'height': 712},
-		'Rocky Roads':    {'x': 280, 'y': 424, 'width': 900, 'height': 712, 'scroll': -1},
-		'Tailena': {'x': 390, 'y': 267, 'width': 900, 'height': 712},
-		'Astrub City':    {'x': 338, 'y': 228, 'width': 900, 'height': 704},
-		'Madrestam':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
-		'Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
-		'Frigost Island': {'x': 452, 'y': 317, 'width': 900, 'height': 704, 'scroll': -10},
-	},
+	'To' : ['Bonta', 
+			'Rocky Roads',
+			'Tailena', 
+			'Astrub City',
+			'Madrestam', 
+			'Lousy Big',
+			'Frigost Island',
+			'Rocky Plains'],	
+	# 'To': {
+	# 	'Bonta':          {'x': 285, 'y': 330, 'width': 900, 'height': 712},
+	# 	'Rocky Roads':    {'x': 280, 'y': 424, 'width': 900, 'height': 712, 'scroll': -1},
+	# 	'Tailena': {'x': 390, 'y': 267, 'width': 900, 'height': 712},
+	# 	'Astrub City':    {'x': 338, 'y': 228, 'width': 900, 'height': 704},
+	# 	'Madrestam':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
+	# 	'Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
+	# 	'Frigost Island': {'x': 452, 'y': 317, 'width': 900, 'height': 704, 'scroll': -10},
+	# },
 	'SearchBar': {'x': 497, 'y': 136, 'width': 900, 'height': 704},
 	'FirstDestination': {'x': 470, 'y': 194, 'width': 900, 'height': 704},
 	'ZaapItself': {'x': 180, 'y': 241, 'width': 900, 'height': 704}
