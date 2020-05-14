@@ -117,12 +117,13 @@ def screen_game(region, save_to=None):
 		screenshot = pyautogui.screenshot(filename, region)
 	return screenshot
 
-# Return pixel color of given x, y coordinates
+# Return pixel RGB color of given x, y coordinates
 def get_pixel_color(x, y):
 	# pixel = screen_game((x, y, 1, 1))
 	# rgb = pixel.getpixel((0, 0))
 	# return rgb
-	return pyautogui.pixel(x, y)
+	pixel = pyautogui.pixel(x, y)
+	return (pixel.red, pixel.green, pixel.blue)
 
 # Return date as a string in the given format
 def get_date(format='%d-%m-%y'):
@@ -155,7 +156,6 @@ def read_file(filename):
 		file.close()
 		return content
 	else:
-		print(filename)
 		return None
 
 # Return platform name
@@ -226,6 +226,7 @@ def perform_click(x, y, double=False):
 		pyautogui.click(x=x, y=y)
 	pyautogui.moveTo(old_position)
 
+# Move mouse
 def move_mouse(x, y):
 	pyautogui.moveTo((x,y))
 
@@ -240,9 +241,11 @@ def press_key(key, interval=None):
 	elif count == 2:
 		pyautogui.hotkey(keys[0], keys[1])
 
+# Press key and keep it down until key_up is called
 def key_down(key):
 	pyautogui.keyDown(key)
 
+# Unpress a key previously pressed
 def key_up(key):
 	pyautogui.keyUp(key)
 
@@ -271,9 +274,6 @@ def color_matches(color, expected_color, tolerance=0):
 	r, g, b = color
 	red, green, blue = expected_color
 	return (abs(r - red) <= tolerance) and (abs(g - green) <= tolerance) and (abs(b - blue) <= tolerance)
-		# return True
-	# else:
-	# 	print(f"Color mismatch: {r-red}, {g-green}, {b-blue}")
 
 # Return the percentage of a color in an image
 def get_color_percentage(image, expected_color, tolerance=10):

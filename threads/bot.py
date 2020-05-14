@@ -78,7 +78,6 @@ class BotThread(JobThread):
 			if self.suspend: break
 
 			if self.wait_for_box_appear(box_name='Fight Button Light', timeout=1):
-				self.log('Fight detected! human help wanted..', LogType.Error)
 				self.handle_fight()
 
 			# parse instruction
@@ -107,6 +106,7 @@ class BotThread(JobThread):
 
 			elif instruction['name'] == 'Collect':
 				if self.collect(instruction['map'], instruction['store_path']):
+					# If collect return 1, we need to go to the bank. We forward 1 to the caller
 					return 1
 
 			elif instruction['name'] == 'Click':
@@ -114,16 +114,17 @@ class BotThread(JobThread):
 					'x': int(instruction['x']),
 					'y': int(instruction['y']),
 					'width': int(instruction['width']),
-					'height': int(instruction['height']),
+					'height': int(instruction['height'])
 				}
-				if 'r' in instruction:	
+				# Handle the case when the click location need to match the stored color
+				if 'r' in instruction:
 					coordinates['color'] = f"({instruction['r']}, {instruction['g']}, {instruction['b']})"
 					while not self.check_location_color(coordinates):
 						self.log("Click location has a different color, waiting ...")
 						self.pause_event.wait()
 						if self.suspend: return
 						self.sleep(0.01)
-				
+
 				if 'hotkey' in instruction:
 					self.hot_click(instruction['hotkey'], coordinates, instruction['twice'])
 				elif instruction['twice'] == 'True':
@@ -178,5 +179,4 @@ class BotThread(JobThread):
 			self.interpret(instructions, ignore_start_from_step=True)
 		else:
 			self.pause()
-			self.debug('Could not interpret to go to bank path')
-			self.log('Bot is maybe full pod', LogType.Error)
+			self.log('Error: Could not interpret to go to bank path')

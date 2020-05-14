@@ -43,10 +43,9 @@ Boxes = {
 	'PodBar':                {'x': 364, 'y': 692, 'width': 322, 'height': 1, 'windowSize': (900, 704)},
 	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
 	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
-	'Victory':				 {'x': 492, 'y': 479, 'width': 3, 'height': 3, 'windowSize': (900, 704)},
-	'Defeat':				 {'x': 494, 'y': 487, 'width': 3, 'height': 3, 'windowSize': (900, 712)}, 				 
-	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)},
-	'Whole Screen':          {'x': 0, 'y': 0, 'width': 900, 'height': 712, 'windowSize': (900, 712)}
+    'Victory':               {'x': 492, 'y': 479, 'width': 3, 'height': 3, 'windowSize': (900, 704)},
+    'Defeat':                {'x': 494, 'y': 487, 'width': 3, 'height': 3, 'windowSize': (900, 712)},
+	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)}
 	# TODO: update all boxes coordinates to (900, 700) window size
 }
 
@@ -55,7 +54,7 @@ class DragodindeSerenity:
 	Negative, Medium, Positive = ('Negative', 'Medium', 'Positive')
 	MaxMedium = 57.55
 
-# Drago5dindeEnergy
+# DragodindeEnergy
 class DragodindeEnergy:
 	Max = 98.55
 
@@ -78,7 +77,7 @@ Colors = {
 	'Fight Button Light': (206, 240, 0),
 	'Fight Button Dark':  (123,143,0),
 	'Job Level Up Popup': (229, 249, 0),
-	'Victory':			  (206,150,20),
+	'Victory':            (206,150,20),
 	'Defeat':             (161,75,67)
 }
 
@@ -100,7 +99,7 @@ KeyboardShortcuts = {
 	'Tab':       'tab',
 	'Esc':       'esc',
 	'Ctrl':      'crtl',
-	'arakne':	 '-',
+	'arakne':    '-',
 	'epee':      '(',
 	'EndTurn':   ','
 	#'Copy':      'ctrl+c',
@@ -126,26 +125,17 @@ Enclos = {
 	# TODO: rename 'width' & 'height' to 'windowSize' (this may impact many parts of code)
 }
 
-# Zaapdata
+# Zaap
 Zaap = {
-	'To' : ['Bonta', 
-			'Rocky Roads',
-			'Tailena', 
-			'Astrub City',
-			'Madrestam', 
-			'Lousy Big',
-			'Frigost Island',
-			'Rocky Plains',
-			'Gobball Corner'],	
-	# 'To': {
-	# 	'Bonta':          {'x': 285, 'y': 330, 'width': 900, 'height': 712},
-	# 	'Rocky Roads':    {'x': 280, 'y': 424, 'width': 900, 'height': 712, 'scroll': -1},
-	# 	'Tailena': {'x': 390, 'y': 267, 'width': 900, 'height': 712},
-	# 	'Astrub City':    {'x': 338, 'y': 228, 'width': 900, 'height': 704},
-	# 	'Madrestam':   {'x': 467, 'y': 273, 'width': 900, 'height': 712},
-	# 	'Lousy Big Plains':   {'x': 447, 'y': 395, 'width': 900, 'height': 712},
-	# 	'Frigost Island': {'x': 452, 'y': 317, 'width': 900, 'height': 704, 'scroll': -10},
-	# },
+	'To': ['Bonta',
+            'Rocky Roads',
+            'Tailena',
+            'Astrub City',
+            'Madrestam',
+            'Lousy Big',
+            'Frigost Island',
+            'Rocky Plains',
+            'Gobball Corner'],
 	'SearchBar': {'x': 497, 'y': 136, 'width': 900, 'height': 704},
 	'FirstDestination': {'x': 470, 'y': 194, 'width': 900, 'height': 704},
 	'ZaapItself': {'x': 180, 'y': 241, 'width': 900, 'height': 704}
@@ -173,17 +163,3 @@ Zaapi = {
 }
 
 BankPath = "./paths/path-to-bank.path"
-# BankPath = {
-# 	# Bonta
-# 	'Bank Bonta': [
-# 		'Zaap(from=Havenbag,to=Bonta)',
-# 		'Zaapi(from=Zaap Bonta,to=Bank)',
-# 		# TODO: complete this path...
-# 	],
-# 	# Brakmar
-# 	'Bank Brakmar': [
-# 		'Zaap(from=Havenbag,to=Brakmar)',
-# 		'Zaapi(from=Zaap Brakmar,to=Bank)',
-# 		# TODO: complete this path...
-# 	]
-# }

@@ -21,22 +21,29 @@ class JobThread(FarmingThread):
 		self.collection_time = parent.settings['Farming']['CollectionTime']
 		self.first_resource_additional_collection_time = parent.settings['Farming']['FirstResourceAdditionalCollectionTime']
 		self.game_version = parent.settings['Game']['Version']
+		self.ratio_collection = parent.settings['Farming']['RatioCollectionMap']
+		self.name_ratio_collection_map = parent.settings['Farming']['NameRatioCollectionMap']
 
 	def collect(self, map_name, store_path):
+		'''
+		Collects all resources until the map is done.
+		If the character has no longer any pod capacity, returns 1 to
+		signify that we need to go to the bank.
+		'''
 		map_data = parser.parse_data(maps.load(), map_name)
 		if map_data:
 			# show resources on minimap
 			self.update_minimap(map_data, 'Resource', MiniMap.point_colors['Resource'])
 			# collect resources
 			is_first_resource = True
-			loupe = 0
+			miss = 0
 			for resource in map_data:
 				# check for pause or suspend
 				self.pause_event.wait()
 				if self.suspend: return
 				# check resource color
 				if not self.check_resource_color(resource):
-					loupe += 1 
+					miss += 1
 					# go to next resource
 					continue
 				# screen game
@@ -62,7 +69,6 @@ class JobThread(FarmingThread):
 				if self.monitor_game_screen(tolerance=2.5, screen=screen, timeout=1, wait_after_timeout=False):
 					# check for fight
 					if self.game_version != GameVersion.Retro and self.wait_for_box_appear(box_name='Fight Button Light', timeout=1):
-						self.log('Fight detected! human help wanted..', LogType.Error)
 						self.handle_fight()
 					elif self.auto_close_popups:
 						# it should be a popup (level up, ...)
@@ -83,15 +89,11 @@ class JobThread(FarmingThread):
 				# get pod
 				if self.game_version != GameVersion.Retro and \
 				   self.get_pod() >= self.go_to_bank_pod_percentage:
-					# pod is full, go to store
-					# if store_path != 'None':
-					# 	self.go_to_store(store_path)
-					# else:
-					# 	self.pause()
-					self.log('Bot is full pod', LogType.Error)
+					self.log('Bot is full pod', LogType.Info)
 					return 1
-			ratio = (len(map_data)-loupe)/len(map_data)
-			tools.save_text_to_file(f"{map_name}: {ratio}\n", "Ratio/RatioCollectMap.txt", 'a+')
+			if self.ratio_collection:
+				ratio = (len(map_data)-miss)/len(map_data)
+				tools.save_text_to_file(f"{map_name}: {ratio}\n", self.name_ratio_collection_map, 'a+')
 
 
 	def check_location_color(self, location):
@@ -99,46 +101,34 @@ class JobThread(FarmingThread):
 			return True
 		location['color'] = parser.parse_color(location['color'])
 		game_x, game_y, game_width, game_height = self.game_location
-		tools.move_mouse(game_x, game_y)
-		self.sleep(0.05)
 		coordones = []
-		x, y = tools.adjust_click_position(location['x'], location['y'], location['width'], location['height'], game_x, game_y, game_width, game_height)
+		x, y = tools.adjust_click_position(location['x'], location['y'], location['width'], location['height'], \
+										   game_x, game_y, game_width, game_height)
 		kernel = [[-1,-1],[0,-1],[1,-1],[-1,0],[0,0],[1,0],[-1,1],[0,1],[1,1]]
 		for offset in kernel:
 			coordones.append([x+offset[0], y+offset[1]])
-		# print(coordones)
-		# for coord in coordones:
-		# 	color = tools.get_pixel_color(coord[0],coord[1])
-		# 	if tools.color_matches(color, location['color'], tolerance=10):
-		# 		return True
-		tools.move_mouse(x+5,y+5)	
+		tools.move_mouse(x+5,y+5)
 		self.sleep(0.05)
 		for coord in coordones:
 			color = tools.get_pixel_color(coord[0],coord[1])
 			if tools.color_matches(color, location['color'], tolerance=10):
 				return True
-		# tools.move_mouse(game_x, game_y)
 		return False
-		# color_1 = tools.get_pixel_color(x, y)
-		
-		# self.sleep(0.05)
-		# color = tools.get_pixel_color(x, y)
-		# location['color'] = parser.parse_color(location['color'])
-		# if not tools.color_matches(color, location['color'], tolerance=10) and not tools.color_matches(color_1, location['color'], tolerance=10):
-		# 	return False
-		# return True
 
 	def check_resource_color(self, resource):
 		# check pixel color
 		if self.check_resources_color:
 			if not self.check_location_color(resource):
-				self.debug("Ignoring non-matching resource {'x': %d, 'y': %d, 'color': %s}" % (resource['x'], resource['y'], resource['color']))
+				self.debug(f"Ignoring non-matching resource 'x': {resource['x']}, 'y': {resource['x']}, 'color': {resource['color']}")
 				# remove current resource from minimap (index = 0)
 				self.remove_from_minimap(0)
 				return False
 		return True
 
 	def get_pod(self):
+		'''
+		Detects the level of pod by looking at the bar below the spells
+		'''
 		self.pause_event.wait()
 		if self.suspend: return
 		# get podbar color & percentage

@@ -41,8 +41,13 @@ def load_defaults():
 			'CheckResourcesColor': True,
 			'AutoClosePopups': True,
 			'CollectionTime': 4,
-			'FirstResourceAdditionalCollectionTime': 3
+			'FirstResourceAdditionalCollectionTime': 3,
+			'RatioCollectionMap':True,
+			'NameRatioCollectionMap': "Ratio/RatioCollectMap.txt"
 		},
+		'Fighting': {
+			'SaveScreenshots': False
+		}
 		'EnableShortcuts': False
 	}
 	return settings
