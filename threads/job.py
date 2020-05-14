@@ -95,18 +95,38 @@ class JobThread(FarmingThread):
 
 
 	def check_location_color(self, location):
+		if location['color'] is None:
+			return True
+		location['color'] = parser.parse_color(location['color'])
 		game_x, game_y, game_width, game_height = self.game_location
-		x, y = tools.adjust_click_position(location['x'], location['y'], location['width'], location['height'], game_x, game_y, game_width, game_height)
 		tools.move_mouse(game_x, game_y)
 		self.sleep(0.05)
-		color_1 = tools.get_pixel_color(x, y)
-		tools.move_mouse(x+5,y+5)
+		coordones = []
+		x, y = tools.adjust_click_position(location['x'], location['y'], location['width'], location['height'], game_x, game_y, game_width, game_height)
+		kernel = [[-1,-1],[0,-1],[1,-1],[-1,0],[0,0],[1,0],[-1,1],[0,1],[1,1]]
+		for offset in kernel:
+			coordones.append([x+offset[0], y+offset[1]])
+		# print(coordones)
+		# for coord in coordones:
+		# 	color = tools.get_pixel_color(coord[0],coord[1])
+		# 	if tools.color_matches(color, location['color'], tolerance=10):
+		# 		return True
+		tools.move_mouse(x+5,y+5)	
 		self.sleep(0.05)
-		color = tools.get_pixel_color(x, y)
-		location['color'] = parser.parse_color(location['color'])
-		if location['color'] is not None and not tools.color_matches(color, location['color'], tolerance=10) and not tools.color_matches(color_1, location['color'], tolerance=10):
-			return False
-		return True
+		for coord in coordones:
+			color = tools.get_pixel_color(coord[0],coord[1])
+			if tools.color_matches(color, location['color'], tolerance=10):
+				return True
+		# tools.move_mouse(game_x, game_y)
+		return False
+		# color_1 = tools.get_pixel_color(x, y)
+		
+		# self.sleep(0.05)
+		# color = tools.get_pixel_color(x, y)
+		# location['color'] = parser.parse_color(location['color'])
+		# if not tools.color_matches(color, location['color'], tolerance=10) and not tools.color_matches(color_1, location['color'], tolerance=10):
+		# 	return False
+		# return True
 
 	def check_resource_color(self, resource):
 		# check pixel color

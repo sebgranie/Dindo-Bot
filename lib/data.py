@@ -135,7 +135,8 @@ Zaap = {
 			'Madrestam', 
 			'Lousy Big',
 			'Frigost Island',
-			'Rocky Plains'],	
+			'Rocky Plains',
+			'Gobball Corner'],	
 	# 'To': {
 	# 	'Bonta':          {'x': 285, 'y': 330, 'width': 900, 'height': 712},
 	# 	'Rocky Roads':    {'x': 280, 'y': 424, 'width': 900, 'height': 712, 'scroll': -1},

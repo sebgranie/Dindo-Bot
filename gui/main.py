@@ -1045,7 +1045,7 @@ class BotWindow(Gtk.ApplicationWindow):
 
 	def on_bot_path_changed(self, filechooserbutton):
 		path_filename = filechooserbutton.get_filename()
-		print(path_filename)
+		# print(path_filename)
 		_, ext = os.path.splitext(path_filename)
 		if ext == ".paths":
 			with open(path_filename, "r") as f:
