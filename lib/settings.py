@@ -40,14 +40,14 @@ def load_defaults():
 			'SaveDragodindesImages': False,
 			'CheckResourcesColor': True,
 			'AutoClosePopups': True,
-			'CollectionTime': 4,
+			'CollectionTime': 0,
 			'FirstResourceAdditionalCollectionTime': 3,
 			'RatioCollectionMap':True,
 			'NameRatioCollectionMap': "Ratio/RatioCollectMap.txt"
 		},
 		'Fighting': {
 			'SaveScreenshots': False
-		}
+		},
 		'EnableShortcuts': False
 	}
 	return settings

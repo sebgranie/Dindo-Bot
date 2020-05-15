@@ -44,6 +44,7 @@ Boxes = {
 	'Fight Button Light':    {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
 	'Fight Button Dark':     {'x': 720, 'y': 661, 'width': 1, 'height': 1, 'windowSize': (900, 712)},
     'Victory':               {'x': 492, 'y': 479, 'width': 3, 'height': 3, 'windowSize': (900, 704)},
+	'NewVictory':            {'x': 101, 'y': 205, 'width': 3, 'height': 3, 'windowSize': (900, 704)},
     'Defeat':                {'x': 494, 'y': 487, 'width': 3, 'height': 3, 'windowSize': (900, 712)},
 	'Job Level Up Popup':    {'x': 249, 'y': 397, 'width': 11, 'height': 1, 'windowSize': (900, 713)}
 	# TODO: update all boxes coordinates to (900, 700) window size
@@ -78,6 +79,7 @@ Colors = {
 	'Fight Button Dark':  (123,143,0),
 	'Job Level Up Popup': (229, 249, 0),
 	'Victory':            (206,150,20),
+	'NewVictory':         (255,235,165),
 	'Defeat':             (161,75,67)
 }
 

@@ -1,5 +1,6 @@
 # Dindo Bot
 
+import random
 import numpy as np
 import time
 import gi
@@ -25,7 +26,7 @@ class FightingThread(GameThread):
         return True
 
     def fight_still_on(self):
-        if self.has_box_appeared('Victory') or self.has_box_appeared('Defeat'):
+        if self.has_box_appeared('Victory') or self.has_box_appeared('Defeat') or self.has_box_appeared('NewVictory'):
             return False
         return True
 
@@ -94,8 +95,8 @@ class FightingThread(GameThread):
                     cv2.CHAIN_APPROX_SIMPLE)
                 cnts = imutils.grab_contours(cnts)
 
-                cX = 0
-                cY = 0
+                cX = []
+                cY = []
                 # loop over the contours
                 for c in cnts:
                     # compute the center of the contour, then detect the name of the
@@ -107,8 +108,8 @@ class FightingThread(GameThread):
                     M = cv2.moments(c)
                     if not M["m00"]:
                         continue
-                    cX = int((M["m10"] / M["m00"]) * ratio)
-                    cY = int((M["m01"] / M["m00"]) * ratio)
+                    cX.append(int((M["m10"] / M["m00"]) * ratio))
+                    cY.append(int((M["m01"] / M["m00"]) * ratio))
 
                     # shape += str(cX * cY)
                     # multiply the contour (x, y)-coordinates by the resize ratio,
@@ -119,24 +120,26 @@ class FightingThread(GameThread):
                     cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
                     # cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,
                     # 	0.5, (255, 255, 255), 2)
-                    cv2.circle(image, (cX,cY), 1, (255,0,0))
+                    cv2.circle(image, (cX[-1],cY[-1]), 1, (255,0,0))
 
                     im = Image.fromarray(image)
-                    im.save(f"screenshots/processed-{self.index}.jpeg")
-                    self.index += 1
-                if not len(cnts):
+                    if self.save_screenshots:
+                        im.save(f"screenshots/processed-{self.index}.jpeg")
+                        self.index += 1
+                if not len(cX):
                     self.debug("No contours found. Can\'t invoke the arakne", DebugLevel.High)
                 elif self.fight_still_on():
                     blue_box = {}
-                    blue_box['x'] = cX
-                    blue_box['y'] = cY
+                    i = random.randint(0,len(cX)-1)
+                    blue_box['x'] = cX[i]
+                    blue_box['y'] = cY[i]
                     blue_box['width'] = width
                     blue_box['height'] = height
                     self.click(blue_box)
                     self.debug(f"Invoked Spider on {blue_box['x']}, {blue_box['y']}", DebugLevel.High)
 
                 self.sleep(2.0)
-                self.debug("End Turn .. ", LogType.High)
+                self.debug("End Turn .. ", DebugLevel.High)
                 self.press_key(data.KeyboardShortcuts['EndTurn'])
             else:
                 self.sleep(2.0)
